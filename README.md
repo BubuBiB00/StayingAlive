@@ -1,2 +1,2 @@
 # StayingAlive
-Staying Alive is our school intern fitness porgram.
+Staying Alive is our school's fitness porgram.
