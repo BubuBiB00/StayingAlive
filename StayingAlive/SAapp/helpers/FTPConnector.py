@@ -1,16 +1,25 @@
 import paramiko
+from base64 import decodebytes
+
+keydata = b"""AAAAC3NzaC1lZDI1NTE5AAAAIBXPxzSczLFKF/k0MrNfVAGJXrRcm74WydJti3cWo0Oj"""
+key = paramiko.Ed25519Key(data=decodebytes(keydata))
 
 class FTPConnector:
-    def __init__(self, hostname, port, username, password):
+    def __init__(self):
         self.client = paramiko.SSHClient()
-        self.client.load_host_keys()
+        self.client.get_host_keys().add('[sandbox.bulme.at]:22', 'ssh-rsa', key)
         self.client.set_missing_host_key_policy(paramiko.RejectPolicy)
 
-        self._hostname = hostname
-        self._port = port
-        self._username = username
-        self._password = password
+        file = open("StayingAlive/SAapp/helpers/config.txt")
+        line = file.readline()
+        self.data = line.split(",")
+        file.close()
 
+        self._hostname = self.data[0]
+        self._port = self.data[1]
+        self._username = self.data[2]
+        self._password = self.data[3]
+        self._serverlocation = self.data[4]
 
     def connect_to_server(self):
         try:
@@ -18,16 +27,12 @@ class FTPConnector:
             return self.client.open_sftp()
             
         except Exception as e:
-            return e
+            print(e)
     
-    def generate_path_for_video(self):
-        file_location_on_server = "/StayingAlive/test.mp4"
-        return file_location_on_server
-    
-
     def upload_video(self, file_to_upload):
-        file_location_on_server = self.generate_path_for_video()
-
+        file_only = file_to_upload.split("/")
+        file_location_on_server = self._serverlocation + file_only[-1]
+        
         sftp = self.connect_to_server()
         try:
             sftp.put(file_to_upload, file_location_on_server)
@@ -35,8 +40,5 @@ class FTPConnector:
 
         except Exception as e:
             sftp.close()
+            print(e)
             return e
-        
-
-upload_current_video = FTPConnector(hostname="schueler.bulme.at", port="22", username="florentin.aldrian", password="ThBlum3Cod3")
-upload_current_video.upload_video(file_to_upload="/test.mp4")
