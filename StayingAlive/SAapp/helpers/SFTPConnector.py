@@ -27,7 +27,7 @@ class SFTPConnector:
             return self.client.open_sftp()
             
         except Exception as e:
-            print(e)
+            return e
     
     def upload_video(self, file_to_upload):
         file_only = file_to_upload.split("/")
@@ -41,9 +41,5 @@ class SFTPConnector:
 
         except Exception as e:
             sftp.close()
-            print(e)
             return e
         
-uploader = SFTPConnector()
-path = uploader.upload_video("D:/Downloads/treimsihdoi2352.2342-2n47245716342b65zn3j.mp4")
-print(path)
