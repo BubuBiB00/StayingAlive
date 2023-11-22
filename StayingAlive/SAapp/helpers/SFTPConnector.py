@@ -37,8 +37,13 @@ class SFTPConnector:
         try:
             sftp.put(file_to_upload, file_location_on_server)
             sftp.close()
+            return file_location_on_server
 
         except Exception as e:
             sftp.close()
             print(e)
             return e
+        
+uploader = SFTPConnector()
+path = uploader.upload_video("D:/Downloads/treimsihdoi2352.2342-2n47245716342b65zn3j.mp4")
+print(path)
