@@ -4,7 +4,7 @@ from base64 import decodebytes
 keydata = b"""AAAAC3NzaC1lZDI1NTE5AAAAIBXPxzSczLFKF/k0MrNfVAGJXrRcm74WydJti3cWo0Oj"""
 key = paramiko.Ed25519Key(data=decodebytes(keydata))
 
-class FTPConnector:
+class SFTPConnector:
     def __init__(self):
         self.client = paramiko.SSHClient()
         self.client.get_host_keys().add('[sandbox.bulme.at]:22', 'ssh-rsa', key)
