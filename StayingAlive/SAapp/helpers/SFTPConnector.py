@@ -27,22 +27,19 @@ class SFTPConnector:
             return self.client.open_sftp()
             
         except Exception as e:
-            print(e)
+            return e
     
     def upload_video(self, file_to_upload):
-        print(f"file_to_upload {file_to_upload}")
         file_only = file_to_upload.split("/")
-        print(f"file_only {file_only}")
         file_location_on_server = self._serverlocation + file_only[-1]
-        print(f"file_location_on_server {file_location_on_server}")
         
         sftp = self.connect_to_server()
         try:
             sftp.put(file_to_upload, file_location_on_server)
             sftp.close()
-            return(file_location_on_server)
+            return file_location_on_server
 
         except Exception as e:
             sftp.close()
-            print(e)
             return e
+
