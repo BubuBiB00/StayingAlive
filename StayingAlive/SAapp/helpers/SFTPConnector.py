@@ -10,7 +10,7 @@ class SFTPConnector:
         self.client.get_host_keys().add('[sandbox.bulme.at]:22', 'ssh-rsa', key)
         self.client.set_missing_host_key_policy(paramiko.RejectPolicy)
 
-        file = open("StayingAlive/SAapp/helpers/config.txt")
+        file = open("SAapp/helpers/config.txt")
         line = file.readline()
         self.data = line.split(",")
         file.close()
@@ -42,4 +42,4 @@ class SFTPConnector:
         except Exception as e:
             sftp.close()
             return e
-        
+
