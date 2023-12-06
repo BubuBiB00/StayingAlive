@@ -4,6 +4,13 @@
   <form method="post" class="dropzone" enctype="multipart/form-data">
     {% csrf_token %}
     <input type="file" name="myfile">
+    <br>
+    <h3>Title</h3>
+    <input type="text" name="title">
+    <br>
+    <h3>Description</h3>
+    <input type="text" name="description">
+    <br>
     <button type="submit">Upload</button>
   </form>
 
