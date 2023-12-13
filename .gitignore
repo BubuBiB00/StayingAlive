@@ -9,6 +9,7 @@
 [Ss]cripts
 pyvenv.cfg
 .venv
+.idea
 pip-selfcheck.json
 /StayingAlive/SAapp/helpers/config.txt
 __pycache__
