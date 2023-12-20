@@ -1,8 +1,8 @@
 {% extends "SAapp/base.html" %}
 {% block body %}
-{% if exercise_list %}
-    <ul>
-    {% for exercise in exercise_list %}
+{% if exercis_sequence_list %}
+    <ul class="mt-5">
+    {% for exercise in exercis_sequence_list %}
         <a>{{ exercise.title }},</a>
         <a>{{ exercise.description }},</a>
         <a>{{ exercise.creation_date }}</a>
