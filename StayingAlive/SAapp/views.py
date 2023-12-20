@@ -6,6 +6,7 @@ from django.template import loader
 from .models import Exercise
 from django.utils import timezone
 
+from random import randint
 
 # Create your views here.
 def IndexView(request):
@@ -16,14 +17,7 @@ def IndexView(request):
     #output = ", ".join([q.title for q in exercise_list])
     #return HttpResponse(output)
 
-#Show exercise view.
-def ExerciseView(request):
-    exercis_sequence_list = Exercise.objects.all()
-    template = loader.get_template('SAapp/exercise.html')
-    context = { "exercis_sequence_list" : exercis_sequence_list}
-    return HttpResponse(template.render(context, request))
-
-def upload_exercise(request):
+def UploadExerciseView(request):
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']
         post_data = request.POST
@@ -39,3 +33,17 @@ def upload_exercise(request):
             'uploaded_file_url': remote_file_location
         })
     return render(request, 'SAapp/uploadExercise.html')
+
+def ExerciseSequenceView(request):
+    sequence_length = 5
+    training = []
+    template = loader.get_template('SAapp/exercise.html')
+
+    all_exercises = Exercise.objects.all()
+
+    for i in range(sequence_length):
+        index = randint(0,len(all_exercises)-1)
+        training.append(all_exercises[index])
+
+    context = { "exercise_sequence_list" : training}
+    return HttpResponse(template.render(context, request))
