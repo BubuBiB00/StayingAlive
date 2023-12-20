@@ -17,14 +17,7 @@ def IndexView(request):
     #output = ", ".join([q.title for q in exercise_list])
     #return HttpResponse(output)
 
-#Show exercise view.
-def ExerciseView(request):
-    exercis_sequence_list = Exercise.objects.all()
-    template = loader.get_template('SAapp/exercise.html')
-    context = { "exercis_sequence_list" : exercis_sequence_list}
-    return HttpResponse(template.render(context, request))
-
-def upload_exercise(request):
+def UploadExerciseView(request):
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']
         post_data = request.POST
@@ -41,7 +34,7 @@ def upload_exercise(request):
         })
     return render(request, 'SAapp/uploadExercise.html')
 
-def exercise_sequence(request):
+def ExerciseSequenceView(request):
     sequence_length = 5
     training = []
     template = loader.get_template('SAapp/exercise.html')
