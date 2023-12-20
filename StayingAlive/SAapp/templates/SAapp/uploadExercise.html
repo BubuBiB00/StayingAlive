@@ -3,7 +3,7 @@
 
 {% block body %}
 {% block content %}
-  <form method="post" class="dropzone" enctype="multipart/form-data">
+  <form method="post" class="dropzone mt-5" enctype="multipart/form-data">
     {% csrf_token %}
     <input type="file" name="myfile">
     <br>

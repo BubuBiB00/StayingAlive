@@ -3,7 +3,6 @@ from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from .helpers.SFTPConnector import SFTPConnector
 from django.template import loader
-
 from .models import Exercise
 from django.utils import timezone
 
@@ -19,9 +18,9 @@ def IndexView(request):
 
 #Show exercise view.
 def ExerciseView(request):
-    exercise_list = Exercise.objects.all()
+    exercis_sequence_list = Exercise.objects.all()
     template = loader.get_template('SAapp/exercise.html')
-    context = { "exercise_list" : exercise_list}
+    context = { "exercis_sequence_list" : exercis_sequence_list}
     return HttpResponse(template.render(context, request))
 
 def upload_exercise(request):
