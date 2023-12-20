@@ -41,9 +41,14 @@ def upload_exercise(request):
         })
     return render(request, 'SAapp/uploadExercise.html')
 
-def exercise_sequence():
-    training_length = 5
+def exercise_sequence(request):
     training = []
+    template = loader.get_template('SAapp/exercise.html')
+
     all_exercises = Exercise.objects.all()
-    for i in range(training_length):
+    print(all_exercises)
+    for i in range(len(all_exercises)):
         training.append(all_exercises[i])
+
+    context = { "exercise_sequenze_list" : training}
+    return HttpResponse(template.render(context, request))
