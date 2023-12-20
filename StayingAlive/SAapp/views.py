@@ -46,4 +46,4 @@ def exercise_sequence():
     training = []
     all_exercises = Exercise.objects.all()
     for i in range(training_length):
-        print(i)
+        training.append(all_exercises[i])
