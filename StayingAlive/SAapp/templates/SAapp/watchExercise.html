@@ -1,0 +1,10 @@
+{% block content %}
+{% load static %}
+
+<video width="1080" height="720" controls>
+  <source src="{% static '/' %}{{ video_to_watch }}" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+  {{ video_to_watch }}
+
+{% endblock %}

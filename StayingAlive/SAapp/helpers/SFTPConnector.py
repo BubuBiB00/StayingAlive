@@ -1,3 +1,5 @@
+import os
+
 import paramiko
 from base64 import decodebytes
 
@@ -43,3 +45,14 @@ class SFTPConnector:
             sftp.close()
             return e
 
+    def get_video(self, path):
+        sftp = self.connect_to_server()
+        try:
+            file_name = path.split('/')[-1]
+            sftp.get(path, f"SAapp\\media\\{file_name}")
+            sftp.close()
+            return
+        except Exception as e:
+            sftp.close()
+            print(e)
+            return e

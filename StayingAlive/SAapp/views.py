@@ -1,15 +1,20 @@
+import os
+
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from .helpers.SFTPConnector import SFTPConnector
 from .models import Exercise
 from django.utils import timezone
+from os import listdir
 
 
 # Create your views here.
 def IndexView(request):
     exercise_list = Exercise.objects.all()
-    output = ", ".join([q.title for q in exercise_list])
+    print(exercise_list.count())
+    #output = exercise_list[0].title + exercise_list[0].path
+    output = ", ".join([q.title + q.path for q in exercise_list])
     return HttpResponse(output)
 
 def upload_exercise(request):
@@ -27,3 +32,14 @@ def upload_exercise(request):
             'uploaded_file_url': remote_file_location
         })
     return render(request, 'SAapp/uploadExercise.html')
+
+def watch_exercise(request):
+    clear_folder()
+    video_name = "sample-5s.mp4"
+    ftpconnector = SFTPConnector()
+    ftpconnector.get_video(f"/home/sebastian.karner/StayingAlive/{video_name}")
+    return render(request, template_name='SAapp/watchExercise.html', context={"video_to_watch":video_name})
+
+def clear_folder():
+    for i in listdir(f"SAapp\\media\\"):
+        os.remove(f"SAapp\\media\\{i}")
