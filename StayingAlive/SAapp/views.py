@@ -27,3 +27,10 @@ def upload_exercise(request):
             'uploaded_file_url': remote_file_location
         })
     return render(request, 'SAapp/uploadExercise.html')
+
+def exercise_sequence():
+    training_length = 5
+    training = []
+    all_exercises = Exercise.objects.all()
+    for i in range(training_length):
+        print(i)
