@@ -1,5 +1,7 @@
+{% extends "SAapp/base.html" %}
 {% load static %}
 
+{% block body %}
 {% block content %}
   <form method="post" class="dropzone" enctype="multipart/form-data">
     {% csrf_token %}
@@ -17,4 +19,5 @@
   {% if uploaded_file_url %}
     <p>File uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>
   {% endif %}
+{% endblock %}
 {% endblock %}
