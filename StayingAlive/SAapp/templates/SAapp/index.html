@@ -1,0 +1,16 @@
+{% extends "SAapp/base.html" %}
+
+
+
+{% block body %}
+{% if exercise_list %}
+<ul>
+    <a href="exercise/"><h3>Exercises</h3></a>
+    <a href="upload/"><h3>Upload File</h3></a>
+<!--{% for exercise in exercise_list %}
+{% endfor %}-->
+</ul>
+{% else %}
+<p>No exercises availible.</p>
+{% endif %}
+{% endblock %} 

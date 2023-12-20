@@ -1,0 +1,39 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- CSS Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+  <!-- CSS Custom File -->
+  <link href="{% static 'css/homepage.css' %}" rel="stylesheet">
+</head>
+<body>
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img src="{% static 'media/logo_bulme.png' %}" alt="" width="70" height="70">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link active" aria-current="page" href="/exercise">Exercises</a>
+            <a class="nav-link" href="#">My class</a>
+            <a class="nav-link" href="#">Contact/Feedback</a>
+            <a class="nav-link" href="upload">Create Exercise</a>
+          </div>
+        </div>
+        <a class="btn btn-dark btn-lg" role="button" href="/login">Sign In</a>
+      </div>
+    </nav>
+    {% block body %}
+    {% endblock %}
+</body>
+</html>
+
