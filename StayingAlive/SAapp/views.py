@@ -1,6 +1,6 @@
 import os
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from .helpers.SFTPConnector import SFTPConnector
@@ -35,9 +35,13 @@ def upload_exercise(request):
 
 def watch_exercise(request):
     clear_folder()
-    video_name = "sample-5s.mp4"
+    video_name = ""
     ftpconnector = SFTPConnector()
-    ftpconnector.get_video(f"/home/sebastian.karner/StayingAlive/{video_name}")
+    try:
+        ftpconnector.get_video(f"home/sebastian.karner/StayingAlive/{video_name}")
+    except Exception as e:
+        print(e)
+        return HttpResponseNotFound("<h1>This Exercise is not available!</h1>")
     return render(request, template_name='SAapp/watchExercise.html', context={"video_to_watch":video_name})
 
 def clear_folder():

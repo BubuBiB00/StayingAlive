@@ -54,5 +54,5 @@ class SFTPConnector:
             return
         except Exception as e:
             sftp.close()
-            print(e)
+            raise Exception("Exercise not found")
             return e
