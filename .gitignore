@@ -12,3 +12,5 @@ pyvenv.cfg
 pip-selfcheck.json
 /StayingAlive/SAapp/helpers/config.txt
 /StayingAlive/SAapp/media
+__pycache__
+db.sqlite3
