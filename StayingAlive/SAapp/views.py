@@ -37,7 +37,7 @@ def UploadExerciseView(request):
 def ExerciseSequenceView(request):
     sequence_length = 5
     training = []
-    template = loader.get_template('SAapp/exercise.html')
+    template = loader.get_template('SAapp/exercise_sequence.html')
 
     all_exercises = Exercise.objects.all()
 
@@ -45,5 +45,19 @@ def ExerciseSequenceView(request):
         index = randint(0,len(all_exercises)-1)
         training.append(all_exercises[index])
 
-    context = { "exercise_sequence_list" : training}
+    context = { "exercise_sequence" : training}
+    return HttpResponse(template.render(context, request))
+
+
+def ExerciseSequenceView(request):
+    template = loader.get_template('SAapp/exercise_list.html')
+    exercise_list = []
+
+    all_exercises = Exercise.objects.all()
+
+    for i in all_exercises:
+        index = randint(0,len(all_exercises)-1)
+        exercise_list.append(all_exercises[index])
+
+    context = { "exercise_list" : exercise_list}
     return HttpResponse(template.render(context, request))
