@@ -66,16 +66,10 @@ def ExerciseSequenceView(request):
     return HttpResponse(template.render(context, request))
 
 def watch_exercise_view(request):
-    clear_folder()
-    video_name = ""
+    video_name = "test.mp4"
     ftpconnector = SFTPConnector()
     try:
-        ftpconnector.get_video(f"home/sebastian.karner/StayingAlive/{video_name}")
+        ftpconnector.get_video(f"/home/sebastian.karner/StayingAlive/{video_name}")
     except Exception as e:
-        print(e)
         return HttpResponseNotFound("<h1>This Exercise is not available!</h1>")
     return render(request, template_name='SAapp/watchExercise.html', context={"video_to_watch":video_name})
-
-def clear_folder():
-    for i in listdir(f"SAapp\\media\\"):
-        os.remove(f"SAapp\\media\\{i}")
