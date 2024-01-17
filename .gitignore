@@ -12,3 +12,4 @@ pyvenv.cfg
 pip-selfcheck.json
 /StayingAlive/SAapp/helpers/config.txt
 .vscode
+__pycache__
