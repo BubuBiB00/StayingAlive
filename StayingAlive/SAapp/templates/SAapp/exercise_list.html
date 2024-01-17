@@ -1,5 +1,7 @@
+{% extends "SAapp/base.html" %}
+{% block body %}
 {% if exercise_list %}
-    <ul>
+    <ul class="mt-5">
     {% for exercise in exercise_list %}
         <a>{{ exercise.title }},</a>
         <a>{{ exercise.description }},</a>
@@ -10,3 +12,4 @@
 {% else %}
     <p>No exercises availible.</p>
 {% endif %}
+{% endblock %}

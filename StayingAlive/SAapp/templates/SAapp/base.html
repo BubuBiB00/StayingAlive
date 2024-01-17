@@ -15,7 +15,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="/">
           <img src="{% static 'media/logo_bulme.png' %}" alt="" width="70" height="70">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,13 +23,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-link active" aria-current="page" href="/exercise">Exercises</a>
             <a class="nav-link" href="#">My class</a>
             <a class="nav-link" href="#">Contact/Feedback</a>
-            <a class="nav-link" href="upload">Create Exercise</a>
+            <a class="nav-link" href="/upload">Create Exercise</a>
+            <a class="nav-link" href="/exercise_list">Exercise list</a>
           </div>
         </div>
-        <a class="btn btn-dark btn-lg" role="button" href="/login">Sign In</a>
+        <a class="btn btn-dark" role="button" href="/login" style="padding-left: 2em; padding-right: 2em;">Sign In</a>
       </div>
     </nav>
     {% block body %}

@@ -3,10 +3,10 @@ from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from .helpers.SFTPConnector import SFTPConnector
 from django.template import loader
-
 from .models import Exercise
 from django.utils import timezone
 
+from random import randint
 
 # Create your views here.
 def IndexView(request):
@@ -17,14 +17,7 @@ def IndexView(request):
     #output = ", ".join([q.title for q in exercise_list])
     #return HttpResponse(output)
 
-#Show exercise view.
-def ExerciseView(request):
-    exercise_list = Exercise.objects.all()
-    template = loader.get_template('SAapp/exercise.html')
-    context = { "exercise_list" : exercise_list}
-    return HttpResponse(template.render(context, request))
-
-def upload_exercise(request):
+def UploadExerciseView(request):
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']
         post_data = request.POST
@@ -40,3 +33,31 @@ def upload_exercise(request):
             'uploaded_file_url': remote_file_location
         })
     return render(request, 'SAapp/uploadExercise.html')
+
+def ExerciseSequenceView(request):
+    sequence_length = 5
+    training = []
+    template = loader.get_template('SAapp/exercise_sequence.html')
+
+    all_exercises = Exercise.objects.all()
+
+    for i in range(sequence_length):
+        index = randint(0,len(all_exercises)-1)
+        training.append(all_exercises[index])
+
+    context = { "exercise_sequence" : training}
+    return HttpResponse(template.render(context, request))
+
+
+def ExerciseSequenceView(request):
+    template = loader.get_template('SAapp/exercise_list.html')
+    exercise_list = []
+
+    all_exercises = Exercise.objects.all()
+
+    for i in all_exercises:
+        index = randint(0,len(all_exercises)-1)
+        exercise_list.append(all_exercises[index])
+
+    context = { "exercise_list" : exercise_list}
+    return HttpResponse(template.render(context, request))
