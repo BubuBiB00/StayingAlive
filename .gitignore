@@ -13,3 +13,4 @@ pip-selfcheck.json
 /StayingAlive/SAapp/helpers/config.txt
 __pycache__
 db.sqlite3
+.vscode
