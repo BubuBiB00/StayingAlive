@@ -56,9 +56,8 @@ def ExerciseListView(request):
 
     all_exercises = Exercise.objects.all()
 
-    for i in all_exercises:
-        index = randint(0,len(all_exercises)-1)
-        exercise_list.append(all_exercises[index])
+    for exercise in all_exercises:
+        exercise_list.append(exercise)
 
     context = { "exercise_list" : exercise_list}
     return HttpResponse(template.render(context, request))
