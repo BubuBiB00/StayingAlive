@@ -41,15 +41,16 @@ def ExerciseSequenceView(request):
 
     all_exercises = Exercise.objects.all()
 
-    for i in range(sequence_length):
-        index = randint(0,len(all_exercises)-1)
-        training.append(all_exercises[index])
+    while (len(training) < sequence_length):
+            index = randint(0,len(all_exercises)-1)
+            training.append(all_exercises[index])
+            print(len(training))
 
     context = { "exercise_sequence" : training}
     return HttpResponse(template.render(context, request))
 
 
-def ExerciseSequenceView(request):
+def ExerciseListView(request):
     template = loader.get_template('SAapp/exercise_list.html')
     exercise_list = []
 
