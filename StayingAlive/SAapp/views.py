@@ -44,7 +44,6 @@ def ExerciseSequenceView(request):
     while (len(training) < sequence_length):
             index = randint(0,len(all_exercises)-1)
             training.append(all_exercises[index])
-            print(len(training))
 
     context = { "exercise_sequence" : training}
     return HttpResponse(template.render(context, request))
