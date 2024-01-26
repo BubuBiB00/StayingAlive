@@ -2,22 +2,22 @@
 {% load static %}
 
 {% block body %}
-{% block content %}
-  <form method="post" class="dropzone mt-5" enctype="multipart/form-data">
+  <form method="post" id="upload_form" class="dropzone" enctype="multipart/form-data">
     {% csrf_token %}
-    <input type="file" name="myfile">
+    <h3>File</h3>
+    <div class="input-group mb-3 ml-5 mr-5">
+      <input type="file" class="form-control" id="inputGroupFile01" name="myfile">
+    </div>
     <br>
     <h3>Title</h3>
-    <input type="text" name="title">
+    <input type="text" name="title" class="form-control" placeholder="Example title" aria-label="title" aria-describedby="addon-wrapping">
     <br>
-    <h3>Description</h3>
-    <input type="text" name="description">
-    <br>
-    <button type="submit">Upload</button>
+    <h3>Description</h3>  
+    <input type="text" name="description" class="form-control" placeholder="Example description" aria-label="description" aria-describedby="addon-wrapping">
+    <button type="submit" class="btn btn-dark mt-5">Upload</button>
   </form>
 
   {% if uploaded_file_url %}
     <p>File uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>
   {% endif %}
-{% endblock %}
 {% endblock %}
