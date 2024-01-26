@@ -1,0 +1,16 @@
+{% extends "SAapp/base.html" %}
+{% load static %}
+
+{% block body %}
+  <form method="post" id="upload_form" class="dropzone" enctype="multipart/form-data">
+    <h3>Name</h3>
+    <input type="text" name="name" class="form-control" placeholder="Max Musterman" aria-label="title" aria-describedby="addon-wrapping">
+    <br>
+    <h3>Email</h3>
+    <input type="text" name="email" class="form-control" placeholder="max.musterman@bulme.at" aria-label="title" aria-describedby="addon-wrapping">
+    <br>
+    <h3>Password</h3>  
+    <input type="text" name="Password" class="form-control" placeholder="1234" aria-label="description" aria-describedby="addon-wrapping">
+    <button type="submit" class="btn btn-dark mt-5">Create Account</button>
+  </form>
+{% endblock %}
