@@ -62,4 +62,6 @@ def ExerciseListView(request):
     return HttpResponse(template.render(context, request))
 
 def LoginView(request):
-     pass
+    template = loader.get_template('SAapp/login.html')
+    context = {}
+    return HttpResponse(template.render(context, request))
