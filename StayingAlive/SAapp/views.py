@@ -60,3 +60,6 @@ def ExerciseListView(request):
 
     context = { "exercise_list" : exercise_list}
     return HttpResponse(template.render(context, request))
+
+def LoginView(request):
+     pass
