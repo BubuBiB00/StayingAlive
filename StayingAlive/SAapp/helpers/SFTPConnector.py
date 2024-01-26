@@ -44,15 +44,3 @@ class SFTPConnector:
         except Exception as e:
             sftp.close()
             return e
-
-    def get_video(self, path):
-        sftp = self.connect_to_server()
-        try:
-            file_name = path.split('/')[-1]
-            sftp.get(path, f"SAapp\\media\\{file_name}")
-            sftp.close()
-            return
-        except Exception as e:
-            sftp.close()
-            raise Exception("Exercise not found")
-            return e

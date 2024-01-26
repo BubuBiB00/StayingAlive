@@ -66,10 +66,5 @@ def ExerciseSequenceView(request):
     return HttpResponse(template.render(context, request))
 
 def watch_exercise_view(request):
-    video_name = "test.mp4"
-    ftpconnector = SFTPConnector()
-    try:
-        ftpconnector.get_video(f"/home/sebastian.karner/StayingAlive/{video_name}")
-    except Exception as e:
-        return HttpResponseNotFound("<h1>This Exercise is not available!</h1>")
+    video_name = "sample-5s.mp4"
     return render(request, template_name='SAapp/watchExercise.html', context={"video_to_watch":video_name})
