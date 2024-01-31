@@ -1,10 +1,13 @@
-from django.http import HttpResponse
+import os
+
+from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from .helpers.SFTPConnector import SFTPConnector
 from django.template import loader
 from .models import Exercise
 from django.utils import timezone
+from os import listdir
 
 from random import randint
 
@@ -60,3 +63,7 @@ def ExerciseListView(request):
 
     context = { "exercise_list" : exercise_list}
     return HttpResponse(template.render(context, request))
+
+def watch_exercise_view(request):
+    video_name = "sample-5s.mp4"
+    return render(request, template_name='SAapp/watchExercise.html', context={"video_to_watch":video_name})
