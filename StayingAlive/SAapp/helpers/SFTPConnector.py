@@ -1,3 +1,5 @@
+import os
+
 import paramiko
 from base64 import decodebytes
 
@@ -42,4 +44,3 @@ class SFTPConnector:
         except Exception as e:
             sftp.close()
             return e
-

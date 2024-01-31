@@ -1,10 +1,13 @@
-from django.http import HttpResponse
+import os
+
+from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from .helpers.SFTPConnector import SFTPConnector
 from django.template import loader
 from .models import Exercise
 from django.utils import timezone
+from os import listdir
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout 
@@ -92,3 +95,7 @@ def SignupView(request):
 def user_logout(request):
     logout(request)
     return redirect('login')
+
+def watch_exercise_view(request):
+    video_name = "sample-5s.mp4"
+    return render(request, template_name='SAapp/watchExercise.html', context={"video_to_watch":video_name})
