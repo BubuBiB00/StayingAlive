@@ -52,7 +52,6 @@ def ExerciseSequenceView(request):
     context = { "exercise_sequence" : training}
     return HttpResponse(template.render(context, request))
 
-
 def ExerciseListView(request):
     template = loader.get_template('SAapp/exercise_list.html')
     exercise_list = []
