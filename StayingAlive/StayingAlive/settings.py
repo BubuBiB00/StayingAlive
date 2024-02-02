@@ -119,8 +119,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
-    'SAapp/static',
-    'SAapp/media'
+    'SAapp/static'
 ]
 
 
