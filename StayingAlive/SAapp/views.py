@@ -76,7 +76,9 @@ def LoginView(request):
             user = authenticate(request, username=username, password=password)
             if user:
                 login(request, user)    
-                return redirect('home')
+                return redirect('SAapp/loggedin')
+            else:
+                return redirect('SAapp/signin')
     else:
         form = LoginForm()
     return render(request, 'SAapp/login.html', {'form': form})
@@ -99,3 +101,10 @@ def user_logout(request):
 def watch_exercise_view(request):
     video_name = "sample-5s.mp4"
     return render(request, template_name='SAapp/watchExercise.html', context={"video_to_watch":video_name})
+
+def logged_in_view(request):
+    template = loader.get_template('SAapp/exercise_list.html')
+    user = request.user
+
+    context = {"current_user" : user}
+    return HttpResponse(template.render(context, request))
