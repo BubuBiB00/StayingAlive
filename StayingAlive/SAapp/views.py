@@ -1,6 +1,4 @@
-import os
-
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from .helpers.SFTPConnector import SFTPConnector
@@ -12,11 +10,12 @@ from os import listdir
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout 
 from .forms import UserCreationForm, LoginForm
+import os
 
 from random import randint
 
 # Create your views here.
-def IndexView(request):
+def index_view(request):
     exercise_list = Exercise.objects.all()
     template = loader.get_template('SAapp/index.html')
     context = { "exercise_list" : exercise_list}
@@ -24,15 +23,26 @@ def IndexView(request):
     #output = ", ".join([q.title for q in exercise_list])
     #return HttpResponse(output)
 
-def UploadExerciseView(request):
+def upload_exercise_view(request):
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']
         post_data = request.POST
         sftpconnector = SFTPConnector()
+        myfile.name = post_data["title"] + ".mp4"
 
+        all_exercises = Exercise.objects.all()
+        for exercise in all_exercises:
+            if exercise.path == sftpconnector.get_path() + myfile.name:
+                print(exercise.description)
+                print(exercise.title)
+                return render(request, 'SAapp/uploadExercise.html',
+                              {
+                                  'title_error' : True,
+                                  'title' : exercise.title
+                              })
         fs = FileSystemStorage()
         filename = fs.save(myfile.name, myfile)
-        remote_file_location = sftpconnector.upload_video(myfile.name)
+        remote_file_location = sftpconnector.upload_video(filename)
         e = Exercise(title=post_data["title"], description=post_data["description"], path=remote_file_location, create_date=timezone.now())
         e.save()
         fs.delete(myfile.name)
@@ -41,7 +51,7 @@ def UploadExerciseView(request):
         })
     return render(request, 'SAapp/uploadExercise.html')
 
-def ExerciseSequenceView(request):
+def exercise_sequence_view(request):
     sequence_length = 5
     training = []
     template = loader.get_template('SAapp/exercise_sequence.html')
@@ -55,7 +65,8 @@ def ExerciseSequenceView(request):
     context = { "exercise_sequence" : training}
     return HttpResponse(template.render(context, request))
 
-def ExerciseListView(request):
+
+def exercise_list_view(request):
     template = loader.get_template('SAapp/exercise_list.html')
     exercise_list = []
 
