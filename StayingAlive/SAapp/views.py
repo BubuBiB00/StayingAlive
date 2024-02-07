@@ -5,6 +5,7 @@ from .helpers.SFTPConnector import SFTPConnector
 from django.template import loader
 from .models import Exercise
 from django.utils import timezone
+import os
 
 from random import randint
 
@@ -22,10 +23,18 @@ def upload_exercise_view(request):
         myfile = request.FILES['myfile']
         post_data = request.POST
         sftpconnector = SFTPConnector()
+        myfile.name = post_data["title"] + ".mp4"
 
+        all_exercises = Exercise.objects.all()
+        for exercise in all_exercises:
+            if exercise.path == sftpconnector.get_path() + myfile.name:
+                return render(request, 'SAapp/uploadExercise.html',
+                              {
+                                  'title_error' : True
+                              })
         fs = FileSystemStorage()
         filename = fs.save(myfile.name, myfile)
-        remote_file_location = sftpconnector.upload_video(myfile.name)
+        remote_file_location = sftpconnector.upload_video(filename)
         e = Exercise(title=post_data["title"], description=post_data["description"], path=remote_file_location, create_date=timezone.now())
         e.save()
         fs.delete(myfile.name)

@@ -44,3 +44,6 @@ class SFTPConnector:
         except Exception as e:
             sftp.close()
             return e
+        
+    def get_path(self):
+        return self._serverlocation
