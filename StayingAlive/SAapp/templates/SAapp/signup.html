@@ -2,19 +2,20 @@
 {% load static %}
 
 {% block body %}
-  <form method="post" id="upload_form" class="dropzone" enctype="multipart/form-data">
+  <form method="post" id="upload_form" class="dropzone row g-3 needs-validation" enctype="multipart/form-data">
     {% csrf_token %}
     <h3>Name</h3>
-    <input type="text" name="name" class="form-control" placeholder="Max Musterman" aria-label="title" aria-describedby="addon-wrapping">
+    <input type="text" name="name" class="form-control" placeholder="Max Musterman" aria-label="title" aria-describedby="addon-wrapping" required>
     <br>
+
     <h3>Email</h3>
-    <input type="email" name="email" class="form-control" placeholder="max.musterman@bulme.at" aria-label="title" aria-describedby="addon-wrapping">
+    <input type="email" id="validationDefault01"name="email" class="form-control" placeholder="max.musterman@bulme.at" aria-label="title" aria-describedby="addon-wrapping" required>
     <br>
     <h3>Passwort</h3>  
-    <input type="password" name="Password" class="form-control" placeholder="1234" aria-label="description" aria-describedby="addon-wrapping">
+    <input type="password" id="validationDefault01"name="Password" class="form-control" placeholder="1234" aria-label="description" aria-describedby="addon-wrapping" required>
     <br>
     <h3>Passwort bestätigen</h3>  
-    <input type="password" name="Password" class="form-control" placeholder="1234" aria-label="description" aria-describedby="addon-wrapping">
+    <input type="password" name="Password" class="form-control" placeholder="1234" aria-label="description" aria-describedby="addon-wrapping" required>
     <button type="submit" class="btn btn-dark mt-5">Account erstellen</button>
   </form>
 {% endblock %}
