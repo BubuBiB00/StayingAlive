@@ -3,9 +3,8 @@
 {% if exercise_list %}
     <ul class="mt-5">
     {% for exercise in exercise_list %}
-        <a>{{ exercise.title }},</a>
+        <a href="/watch/{{ exercise.title }}.mp4">{{ exercise.title }},</a>
         <a>{{ exercise.description }},</a>
-        <a>{{ exercise.creation_date }}</a>
         <br>
     {% endfor %}
     </ul>

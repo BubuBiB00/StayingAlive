@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from .helpers.SFTPConnector import SFTPConnector
@@ -8,7 +8,7 @@ from django.utils import timezone
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout 
-from django.contrib import messages
+
 
 from random import randint
 
@@ -21,15 +21,27 @@ def index_view(request):
     #output = ", ".join([q.title for q in exercise_list])
     #return HttpResponse(output)
 
+
 def upload_exercise_view(request):
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']
         post_data = request.POST
         sftpconnector = SFTPConnector()
+        myfile.name = post_data["title"] + ".mp4"
 
+        all_exercises = Exercise.objects.all()
+        for exercise in all_exercises:
+            if exercise.path == sftpconnector.get_path() + myfile.name:
+                print(exercise.description)
+                print(exercise.title)
+                return render(request, 'SAapp/uploadExercise.html',
+                              {
+                                  'title_error' : True,
+                                  'title' : exercise.title
+                              })
         fs = FileSystemStorage()
         filename = fs.save(myfile.name, myfile)
-        remote_file_location = sftpconnector.upload_video(myfile.name)
+        remote_file_location = sftpconnector.upload_video(filename)
         e = Exercise(title=post_data["title"], description=post_data["description"], path=remote_file_location, create_date=timezone.now())
         e.save()
         fs.delete(myfile.name)
@@ -51,6 +63,7 @@ def exercise_sequence_view(request):
 
     context = { "exercise_sequence" : training}
     return HttpResponse(template.render(context, request))
+
 
 def exercise_list_view(request):
     template = loader.get_template('SAapp/exercise_list.html')
@@ -76,7 +89,6 @@ def user_logout(request):
     logout(request)
     return redirect('login')
 
-def watch_exercise_view(request):
-    video_name = "sample-5s.mp4"
+def watch_exercise_view(request, video_name):
     return render(request, template_name='SAapp/watchExercise.html', context={"video_to_watch":video_name})
 
