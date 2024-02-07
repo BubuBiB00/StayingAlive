@@ -78,8 +78,17 @@ def exercise_list_view(request):
     return HttpResponse(template.render(context, request))
 
 def login_view(request):
-
-    return render(request, 'SAapp/auth/login.html')
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request,username,password)
+        if user is not None:
+            login(request, user)
+        else:
+            pass
+    
+    else:
+        return render(request, 'SAapp/auth/login.html')
 
 def signup_view(request):
 
