@@ -106,8 +106,7 @@ def user_logout(request):
     logout(request)
     return redirect('login')
 
-def watch_exercise_view(request):
-    video_name = "sample-5s.mp4"
+def watch_exercise_view(request, video_name):
     return render(request, template_name='SAapp/watchExercise.html', context={"video_to_watch":video_name})
 
 def logged_in_view(request):
