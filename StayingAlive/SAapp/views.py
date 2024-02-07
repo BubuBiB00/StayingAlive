@@ -33,9 +33,12 @@ def upload_exercise_view(request):
         all_exercises = Exercise.objects.all()
         for exercise in all_exercises:
             if exercise.path == sftpconnector.get_path() + myfile.name:
+                print(exercise.description)
+                print(exercise.title)
                 return render(request, 'SAapp/uploadExercise.html',
                               {
-                                  'title_error' : True
+                                  'title_error' : True,
+                                  'title' : exercise.title
                               })
         fs = FileSystemStorage()
         filename = fs.save(myfile.name, myfile)
