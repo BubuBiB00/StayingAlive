@@ -4,8 +4,8 @@
 {% block body %}
   <form method="post" id="upload_form" class="dropzone" enctype="multipart/form-data">
     {% csrf_token %}
-    <h3>Email</h3>
-    <input type="email" name="email" class="form-control" placeholder="max.musterman@bulme.at" aria-label="title" aria-describedby="addon-wrapping" required>
+    <h3>Benutzername</h3>
+    <input type="name" name="name" class="form-control" placeholder="max.musterman" aria-label="title" aria-describedby="addon-wrapping" required>
     <br>
     <h3>Passwort</h3>  
     <input type="Password" name="Password" class="form-control" placeholder="1234" aria-label="description" aria-describedby="addon-wrapping" required>
