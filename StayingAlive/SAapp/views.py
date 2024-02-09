@@ -6,10 +6,12 @@ from django.template import loader
 from .models import Exercise
 from django.utils import timezone
 
+from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout 
+from django.contrib import messages
 
-
+from .forms import *
 from random import randint
 
 # Create your views here.
@@ -79,20 +81,27 @@ def exercise_list_view(request):
 
 def login_view(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request,username,password)
-        if user is not None:
-            login(request, user)
-        else:
-            pass
-    
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('index')
     else:
-        return render(request, 'SAapp/auth/login.html')
+        form = AuthenticationForm()
+    return render(request, 'SAapp/auth/login.html', {'form': form})
 
 def signup_view(request):
-
-    return render(request, 'SAapp/auth/signup.html')
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = SignUpForm()
+    return render(request, 'SAapp/auth/signup.html', {'form': form})
 
 def user_logout(request):
     logout(request)

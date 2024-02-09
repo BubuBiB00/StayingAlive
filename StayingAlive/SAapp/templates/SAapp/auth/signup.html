@@ -2,20 +2,26 @@
 {% load static %}
 
 {% block body %}
-  <form method="post" id="upload_form" class="dropzone row g-3 needs-validation" enctype="multipart/form-data">
+<div class="container">
+  <form method="post" id="signup_form" class="row g-3" enctype="multipart/form-data">
     {% csrf_token %}
-    <h3>Name</h3>
-    <input type="text" name="name" class="form-control" placeholder="Max Musterman" aria-label="title" aria-describedby="addon-wrapping" required>
-    <br>
-
-    <h3>Email</h3>
-    <input type="email" id="validationDefault01"name="email" class="form-control" placeholder="max.musterman@bulme.at" aria-label="title" aria-describedby="addon-wrapping" required>
-    <br>
-    <h3>Passwort</h3>  
-    <input type="password" id="validationDefault01"name="Password" class="form-control" placeholder="1234" aria-label="description" aria-describedby="addon-wrapping" required>
-    <br>
-    <h3>Passwort bestätigen</h3>  
-    <input type="password" name="Password" class="form-control" placeholder="1234" aria-label="description" aria-describedby="addon-wrapping" required>
-    <button type="submit" class="btn btn-dark mt-5">Account erstellen</button>
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input type="text" name="name" class="form-control" id="name" placeholder="Max Musterman" aria-describedby="nameHelp" required>
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">E-Mail</label>
+      <input type="email" name="email" class="form-control" id="email" placeholder="max.musterman@bulme.at" aria-describedby="emailHelp" required>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Passwort</label>
+      <input type="password" name="password" class="form-control" id="password" placeholder="1234" aria-describedby="passwordHelp" required>
+    </div>
+    <div class="mb-3">
+      <label for="confirm_password" class="form-label">Passwort bestätigen</label>
+      <input type="password" name="confirm_password" class="form-control" id="confirm_password" placeholder="1234" aria-describedby="confirmPasswordHelp" required>
+    </div>
+    <button type="submit" class="btn btn-dark mt-3">Account erstellen</button>
   </form>
+</div>
 {% endblock %}
