@@ -108,3 +108,32 @@ def logged_in_view(request):
 
     context = {"current_user" : user}
     return HttpResponse(template.render(context, request))
+def delete_exercise_view(request):
+    exercise_id = int(request.GET.get('exercise_id'))
+    exercise_to_delete = Exercise.objects.get(id=exercise_id)
+    exercise_to_delete.delete()
+    return redirect('/exercise_list')
+def edit_exercise_view(request):
+    exercise_to_edit_id = int(request.GET.get('exercise_id'))
+    exercise_to_edit = Exercise.objects.get(id=exercise_to_edit_id)
+    if request.method == 'POST':
+        post_data = request.POST
+        if len(request.FILES) > 0:
+            if request.FILES['myfile']:
+                myfile = request.FILES['myfile']
+                sftpconnector = SFTPConnector()
+                fs = FileSystemStorage()
+                filename = fs.save(myfile.name, myfile)
+                remote_file_location = sftpconnector.upload_video(myfile.name)
+                exercise_to_edit.path = remote_file_location
+        exercise_to_edit.title = post_data["title"]
+        exercise_to_edit.description = post_data["description"]
+        exercise_to_edit.save()
+        if len(request.FILES) > 0:
+            if request.FILES['myfile']:
+                fs.delete(myfile.name)
+        return redirect('/exercise_list')
+
+    template = loader.get_template('SAapp/editExercise.html')
+    context = { "exercise" : exercise_to_edit}
+    return HttpResponse(template.render(context, request))
