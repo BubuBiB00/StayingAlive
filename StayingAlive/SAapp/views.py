@@ -8,10 +8,9 @@ from django.utils import timezone
 
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout 
-from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from .forms import SignUpForm
 
-from .forms import *
 from random import randint
 
 # Create your views here.
@@ -66,7 +65,6 @@ def exercise_sequence_view(request):
     context = { "exercise_sequence" : training}
     return HttpResponse(template.render(context, request))
 
-
 def exercise_list_view(request):
     template = loader.get_template('SAapp/exercise_list.html')
     exercise_list = []
@@ -81,7 +79,10 @@ def exercise_list_view(request):
 
 def login_view(request):
     if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
+        form = AuthenticationForm(data=request.POST)
+        print(f'Form Errors{form.errors}\n')  
+        print(f'Form Data{form.data}\n')
+        print(request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
@@ -96,9 +97,12 @@ def login_view(request):
 def signup_view(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
+        print('Form Errors',form.errors)
+        print('request Data', request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('login')
+            user = form.save()
+            login(request, user)
+            return redirect('index')
     else:
         form = SignUpForm()
     return render(request, 'SAapp/auth/signup.html', {'form': form})
