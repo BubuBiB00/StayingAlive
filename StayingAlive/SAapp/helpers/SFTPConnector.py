@@ -44,3 +44,9 @@ class SFTPConnector:
         except Exception as e:
             sftp.close()
             return e
+    def delete_video(self, file_to_delete):
+        try:
+            sftp = self.connect_to_server()
+            sftp.remove(f'{self._serverlocation}{file_to_delete}')
+        except Exception as e:
+            return e
