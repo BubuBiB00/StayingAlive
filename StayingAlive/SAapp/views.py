@@ -111,6 +111,8 @@ def logged_in_view(request):
 def delete_exercise_view(request):
     exercise_id = int(request.GET.get('exercise_id'))
     exercise_to_delete = Exercise.objects.get(id=exercise_id)
+    print(exercise_to_delete.title)
+    SFTPConnector.delete_video(exercise_to_delete.title+".mp4")
     exercise_to_delete.delete()
     return redirect('/exercise_list')
 def edit_exercise_view(request):
@@ -123,7 +125,7 @@ def edit_exercise_view(request):
                 myfile = request.FILES['myfile']
                 sftpconnector = SFTPConnector()
                 fs = FileSystemStorage()
-                filename = fs.save(myfile.name, myfile)
+                fs.save(myfile.name, myfile)
                 remote_file_location = sftpconnector.upload_video(myfile.name)
                 exercise_to_edit.path = remote_file_location
         exercise_to_edit.title = post_data["title"]
