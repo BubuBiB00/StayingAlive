@@ -10,11 +10,14 @@
     </div>
     <br>
     <h3>Titel</h3>
-    <input type="text" name="title" class="form-control" placeholder="Example title" aria-label="title" aria-describedby="addon-wrapping" required>
+    <input type="text" name="title" id="upload_exercise_title" class="form-control" value="{{ title }}"placeholder="Example title" aria-label="title" aria-describedby="addon-wrapping" required>
+    {% if title_error %}
+      <div class="error" style="color: red;">Der Name existiert bereits. Bitte wählen Sie einen anderen.</div>
+    {% endif %}
     <br>
     <h3>Beschreibung</h3>  
-    <input type="text" name="description" class="form-control" placeholder="Example description" aria-label="description" aria-describedby="addon-wrapping">
-    <button type="submit" class="btn btn-dark mt-5">Hochladen</button>
+    <input type="text" name="description" class="form-control" value="{{ description }}"placeholder="Example description" aria-label="description" aria-describedby="addon-wrapping">
+    <button type="submit" class="btn btn-dark mt-5" id="upload_btn">Hochladen</button>
   </form>
 
   {% if uploaded_file_url %}
