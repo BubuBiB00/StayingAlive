@@ -6,6 +6,7 @@ from django.template import loader
 from .models import Exercise
 from django.utils import timezone
 
+from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
@@ -22,7 +23,7 @@ def index_view(request):
     #output = ", ".join([q.title for q in exercise_list])
     #return HttpResponse(output)
 
-
+@permission_required('app.tier_1')
 def upload_exercise_view(request):
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']
@@ -65,6 +66,7 @@ def exercise_sequence_view(request):
     context = { "exercise_sequence" : training}
     return HttpResponse(template.render(context, request))
 
+@permission_required('app.tier_1')
 def exercise_list_view(request):
     template = loader.get_template('SAapp/exercise_list.html')
     exercise_list = []
