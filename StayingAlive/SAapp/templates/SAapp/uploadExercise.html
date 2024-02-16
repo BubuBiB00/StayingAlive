@@ -10,7 +10,7 @@
     </div>
     <br>
     <h3>Titel</h3>
-    <input type="text" name="title" id="upload_exercise_title" class="form-control" value="{{ title }}"placeholder="Example title" aria-label="title" aria-describedby="addon-wrapping">
+    <input type="text" name="title" id="upload_exercise_title" class="form-control" value="{{ title }}"placeholder="Example title" aria-label="title" aria-describedby="addon-wrapping" required>
     {% if title_error %}
       <div class="error" style="color: red;">Der Name existiert bereits. Bitte wählen Sie einen anderen.</div>
     {% endif %}

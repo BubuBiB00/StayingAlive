@@ -26,7 +26,7 @@ html{
 #gen_ex_sequence{
     margin-top: 21%;
 }
-#upload_form{
+#upload_form, #delete_form{
     margin-top: 5%;
     margin-left: 5%;
     margin-right: 50%;
