@@ -23,7 +23,7 @@ def index_view(request):
     #output = ", ".join([q.title for q in exercise_list])
     #return HttpResponse(output)
 
-@permission_required('app.tier_1')
+
 def upload_exercise_view(request):
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']
@@ -66,7 +66,7 @@ def exercise_sequence_view(request):
     context = { "exercise_sequence" : training}
     return HttpResponse(template.render(context, request))
 
-@permission_required('app.tier_1')
+
 def exercise_list_view(request):
     template = loader.get_template('SAapp/exercise_list.html')
     exercise_list = []

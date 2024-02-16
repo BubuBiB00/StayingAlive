@@ -1,6 +1,9 @@
 {% extends "SAapp/base.html" %}
 {% block body %}
-{% if exercise_list %}
+
+{% if user.is_staff %}
+
+    {% if exercise_list %}
     <ul class="mt-5">
     {% for exercise in exercise_list %}
         <a href="/watch/{{ exercise.title }}.mp4">{{ exercise.title }},</a>
@@ -8,7 +11,12 @@
         <br>
     {% endfor %}
     </ul>
-{% else %}
+    {% else %}
     <p>Keine Übungen verfügbar.</p>
+    {% endif %}
+
+{% else %}
+    <p>Please login as admin to see this page.</p>
 {% endif %}
+ 
 {% endblock %}
