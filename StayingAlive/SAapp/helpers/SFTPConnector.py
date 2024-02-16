@@ -47,6 +47,7 @@ class SFTPConnector:
         
     def get_path(self):
         return self._serverlocation
+    
     def delete_video(self, file_to_delete):
         try:
             sftp = self.connect_to_server()
