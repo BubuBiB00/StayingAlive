@@ -1,6 +1,9 @@
 {% extends "SAapp/base.html" %}
 {% block body %}
-{% if exercise_list %}
+
+{% if user.is_staff %}
+
+    {% if exercise_list %}
     <ul class="mt-5">
     <table class="table">
         <thead>
@@ -40,9 +43,9 @@
         </tbody>
       </table>
     </ul>
-{% else %}
+    {% else %}
     <p>Keine Übungen verfügbar.</p>
-{% endif %}
+    {% endif %}
 <script>
   function clicked(e, exercise_id)
   {
@@ -54,4 +57,9 @@
       }
   }
   </script>  
+
+{% else %}
+    <p>Please login as admin to see this page.</p>
+{% endif %}
+ 
 {% endblock %}
