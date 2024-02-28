@@ -151,5 +151,5 @@ def edit_exercise_view(request):
         return redirect('/exercise_list')
 
     template = loader.get_template('SAapp/editExercise.html')
-    context = { "exercise" : exercise_to_edit}
+    context = { "exercise" : exercise_to_edit, "exercise_name" : exercise_to_edit.path.split("/")[-1]}
     return HttpResponse(template.render(context, request))
