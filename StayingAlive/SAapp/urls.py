@@ -5,9 +5,9 @@ from . import views
 urlpatterns = [
     path("", views.index_view, name="index"),
     path("watch/<str:video_name>", views.watch_exercise_view, name="watch"),
-    path("login/", views.LoginView, name="login"),
-    path("signup/", views.SignupView, name="signup"),
-    path("loggedin/",views.logged_in_view, name="loggedin"),
+    path("login/", views.login_view, name="login"),
+    path("signup/", views.signup_view, name="signup"),
+    path("logout/", views.user_logout, name="logout"),
     path("delete_exercise/",views.delete_exercise_view, name="delete_exercise"),
     path("edit_exercise/",views.edit_exercise_view, name="edit_exercise"),
 

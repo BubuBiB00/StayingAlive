@@ -1,0 +1,27 @@
+{% extends "SAapp/base.html" %}
+{% load static %}
+
+{% block body %}
+<div class="container">
+  <form method="post" id="signup_form" class="row g-3" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="name" class="form-label">Username</label>
+      <input type="text" name="username" class="form-control" id="name" placeholder="Max Musterman" aria-describedby="nameHelp" required>
+    </div>
+    <div class="mb-3">  
+      <label for="email" class="form-label">E-Mail</label>
+      <input type="email" name="email" class="form-control" id="email" placeholder="max.musterman@bulme.at" aria-describedby="emailHelp" required>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Passwort</label>
+      <input type="password" name="password1" class="form-control" id="password" placeholder="1234" aria-describedby="passwordHelp" required>
+    </div>
+    <div class="mb-3">
+      <label for="confirm_password" class="form-label">Passwort bestätigen</label>
+      <input type="password" name="password2" class="form-control" id="confirm_password" placeholder="1234" aria-describedby="confirmPasswordHelp" required>
+    </div>
+    <button type="submit" class="btn btn-dark mt-3">Account erstellen</button>
+  </form>
+</div>
+{% endblock %}

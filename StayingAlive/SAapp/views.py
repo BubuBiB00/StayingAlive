@@ -5,12 +5,12 @@ from .helpers.SFTPConnector import SFTPConnector
 from django.template import loader
 from .models import Exercise
 from django.utils import timezone
-from os import listdir
 
+from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout 
-from .forms import UserCreationForm, LoginForm
-import os
+from django.contrib.auth import authenticate, login, logout
+from .forms import SignUpForm
 
 from random import randint
 
@@ -22,6 +22,7 @@ def index_view(request):
     return HttpResponse(template.render(context, request))
     #output = ", ".join([q.title for q in exercise_list])
     #return HttpResponse(output)
+
 
 def upload_exercise_view(request):
     if request.method == 'POST' and request.FILES['myfile']:
@@ -78,32 +79,32 @@ def exercise_list_view(request):
     context = { "exercise_list" : exercise_list}
     return HttpResponse(template.render(context, request))
 
-def LoginView(request):
+def login_view(request):
     if request.method == 'POST':
-        form = LoginForm(request.POST)
+        form = AuthenticationForm(data=request.POST)
+        
         if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(request, username=username, password=password)
-            if user:
-                login(request, user)    
-                return redirect('SAapp/loggedin')
-            else:
-                return redirect('SAapp/signin')
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('index')
     else:
-        form = LoginForm()
-    return render(request, 'SAapp/login.html', {'form': form})
+        form = AuthenticationForm()
+    return render(request, 'SAapp/auth/login.html', {'form': form})
 
-def SignupView(request):
+def signup_view(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = SignUpForm(request.POST)
+        
         if form.is_valid():
-            form.save()
-            return redirect('login')
+            user = form.save()
+            login(request, user)
+            return redirect('index')
     else:
-        form = UserCreationForm()
-
-    return render(request, 'SAapp/signup.html', {'form': form})
+        form = SignUpForm()
+    return render(request, 'SAapp/auth/signup.html', {'form': form})
 
 def user_logout(request):
     logout(request)
@@ -116,12 +117,6 @@ def watch_exercise_view(request, video_name):
     username = data[2]
     return render(request, template_name='SAapp/watchExercise.html', context={"video_to_watch":video_name, "user_name":username})
 
-def logged_in_view(request):
-    template = loader.get_template('SAapp/exercise_list.html')
-    user = request.user
-
-    context = {"current_user" : user}
-    return HttpResponse(template.render(context, request))
 
 def delete_exercise_view(request):
     exercise_id = int(request.GET.get('exercise_id'))
