@@ -24,7 +24,9 @@ html{
     overflow: scroll;
 }
 #gen_ex_sequence{
-    margin-top: 21%;
+    margin-top: 40%;
+    margin-left: 82%;
+    background-color: rgb(125, 173, 193);
 }
 #upload_form, #delete_form{
     margin-top: 5%;
