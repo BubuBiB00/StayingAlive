@@ -1,19 +1,36 @@
 {% extends "SAapp/base.html" %}
 {% load static %}
 
+
 {% block body %}
-  <form method="post" id="delete_form" class="dropzone" enctype="multipart/form-data">
-    {% csrf_token %}
-    <h3>Title</h3>  
-    <input type="text" name="title" class="form-control" value="{{ exercise.title }}" aria-label="description" aria-describedby="addon-wrapping">
-    <br>
-    <h3>Datei</h3>
-    <div class="input-group mb-3 ml-5 mr-5">
-      <input type="file" class="form-control" id="inputGroupFile01" name="myfile">
-    </div>
-    <br>
-    <h3>Beschreibung</h3>  
-    <input type="text" name="description" class="form-control" value="{{ exercise.description }}" aria-label="description" aria-describedby="addon-wrapping">
-    <button type="submit" class="btn btn-dark mt-5">Ändern</button>
-  </form>
+
+<form method="post" id="delete_form" class="dropzone" enctype="multipart/form-data">
+  {% csrf_token %}
+  <h3>Title</h3>
+  <input type="text" name="title" class="form-control" value="{{ exercise.title }}" aria-label="description"
+    aria-describedby="addon-wrapping">
+  <br>
+  <h3>Datei</h3>
+  <div class="input-group mb-3 ml-5 mr-5">
+    <input type="file" class="form-control" id="actual-btn" name="myfile" hidden>
+    <label for="actual-btn" class="btn btn-secondary">Datei Auswählen</label>
+    <span id="file-chosen" class="form-control">Keine Datei ausgewählt</span>
+  </div>
+  <br>
+  <h3>Beschreibung</h3>
+  <input type="text" name="description" class="form-control" value="{{ exercise.description }}" aria-label="description"
+  aria-describedby="addon-wrapping">
+  <button type="submit" class="btn btn-dark mt-5">Ändern</button>
+</form>
+  
+  <script>
+    const actualBtn = document.getElementById('actual-btn');
+  
+    const fileChosen = document.getElementById('file-chosen');
+  
+    fileChosen.textContent = "{{ exercise_name }}";
+    actualBtn.addEventListener('change', function () {
+      fileChosen.textContent = this.files[0].name 
+    })
+  </script>
 {% endblock %}
