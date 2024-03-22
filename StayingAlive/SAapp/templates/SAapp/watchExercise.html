@@ -2,8 +2,10 @@
 {% block body %}
 {% load static %}
 
+{{ current_video }}
 <body style="background-color: #24242c;">
   <center>
+    <h2 style="color: #f8f9fa">{{ current_video }}</h2>
     <video width="1080" height="720" controls>
       <source src="https://sandbox.bulme.at/~{{ user_name }}/StayingAlive/{{ current_video }}.mp4" type="video/mp4">
       Your browser does not support the video tag.
