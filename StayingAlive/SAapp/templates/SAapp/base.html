@@ -31,8 +31,14 @@
             <a class="nav-link" href="/exercise_list">Liste aller Übungen</a>
           </div>
         </div>
-        <a class="btn btn-dark" role="button" href="/login" style="padding-left: 2em; padding-right: 2em;">Anmelden</a>
-      </div>
+          {% if not user.is_staff %}
+          <a class="btn btn-dark" role="button" href="/login" style="padding-left: 2em; padding-right: 2em;">Anmelden</a>
+          {% else %}
+          <a class="nav-link text-muted" id="loggedin_user">Benutzer: {{user.username}}</a>
+          <a class="btn btn-dark" role="button" href="/logout" style="margin-left: 2%; padding-left: 2em; padding-right: 2em;">Abmelden</a>
+          {% endif %}
+
+        </div>
     </nav>
     {% block body %}
     {% endblock %}

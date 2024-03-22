@@ -33,3 +33,7 @@ html{
     margin-left: 5%;
     margin-right: 50%;
 }
+#loggin_user{
+    display: inline;
+    align-items: center;
+}
