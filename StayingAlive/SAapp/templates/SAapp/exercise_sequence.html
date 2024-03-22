@@ -8,6 +8,8 @@
         <br>
     {% endfor %}
     </ul>
+{% elif exercise_sequence|length <= 5 %}
+    <p>Es müssen mindestens 5 Übungen vorhanden sein.</p>
 {% else %}
     <p>Keine Übungen verfügbar.</p>
 {% endif %}
