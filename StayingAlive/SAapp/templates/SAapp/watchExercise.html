@@ -1,9 +1,19 @@
-{% block content %}
+{% extends "SAapp/base.html" %}
+{% block body %}
 {% load static %}
 
-<video width="1080" height="720" controls>
-  <source src="https://sandbox.bulme.at/~{{ user_name }}/StayingAlive/{{ video_to_watch }}" type="video/mp4">
-Your browser does not support the video tag.
-</video>
-
+<body style="background-color: #24242c;">
+  <center>
+    <video width="1080" height="720" controls>
+      <source src="https://sandbox.bulme.at/~{{ user_name }}/StayingAlive/{{ current_video }}.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <br>
+    {% if next_video %}
+    <a class="btn btn-secondary" href="/watch/{{ next_video }}.mp4">Next Video</a>
+    {%else%}
+    <a class="btn btn-primary" href="/">Back to home</a>
+    {% endif %}
+  </center>
+</body>
 {% endblock %}

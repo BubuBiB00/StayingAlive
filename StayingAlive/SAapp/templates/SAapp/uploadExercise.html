@@ -7,7 +7,9 @@
       {% csrf_token %}
       <h3>Datei</h3>
       <div class="input-group mb-3 ml-5 mr-5">
-        <input type="file" class="form-control" id="inputGroupFile01" name="myfile">
+        <input type="file" class="form-control" id="actual-btn" name="myfile" hidden>
+        <label for="actual-btn" class="btn btn-secondary">Datei Auswählen</label>
+        <span id="file-chosen" class="form-control">Keine Datei ausgewählt</span>
       </div>
       <br>
       <h3>Titel</h3>
@@ -27,5 +29,15 @@
 {% else %}
   <p>Please login as admin to see this page.</p>
 {% endif %}
+
+<script>
+  const actualBtn = document.getElementById('actual-btn');
+  
+  const fileChosen = document.getElementById('file-chosen');
+
+  actualBtn.addEventListener('change', function () {
+    fileChosen.textContent = this.files[0].name 
+  })
+</script>
  
 {% endblock %}

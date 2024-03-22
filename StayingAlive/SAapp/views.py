@@ -55,13 +55,20 @@ def upload_exercise_view(request):
 def exercise_sequence_view(request):
     sequence_length = 5
     training = []
+    exercise_names = []
     template = loader.get_template('SAapp/exercise_sequence.html')
 
     all_exercises = Exercise.objects.all()
+    if len(all_exercises) >= sequence_length:
+        while (len(training) < sequence_length):
+                index = randint(0,len(all_exercises)-1)
+                if all_exercises[index] not in training:
+                    training.append(all_exercises[index])
+                    exercise_names.append(all_exercises[index].title)
+    
+    #TODO Correct Error Message if less than 5 exercise in db
 
-    while (len(training) < sequence_length):
-            index = randint(0,len(all_exercises)-1)
-            training.append(all_exercises[index])
+    request.session["exercise_sequence_title"] = exercise_names
 
     context = { "exercise_sequence" : training}
     return HttpResponse(template.render(context, request))
@@ -115,7 +122,14 @@ def watch_exercise_view(request, video_name):
         line = file.readline()
     data = line.split(",")
     username = data[2]
-    return render(request, template_name='SAapp/watchExercise.html', context={"video_to_watch":video_name, "user_name":username})
+    video_list = request.session["exercise_sequence_title"]
+    current_index = video_list.index(video_name.split(".mp4")[0])
+
+    if current_index < 4:
+        next_video = video_list[current_index + 1]
+    else:
+        next_video = None
+    return render(request, template_name='SAapp/watchExercise.html', context={ "current_video": video_list[current_index], "next_video": next_video, "user_name":username})
 
 
 def delete_exercise_view(request):
