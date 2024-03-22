@@ -59,7 +59,7 @@ def exercise_sequence_view(request):
     template = loader.get_template('SAapp/exercise_sequence.html')
 
     all_exercises = Exercise.objects.all()
-    if len(all_exercises) > sequence_length:
+    if len(all_exercises) >= sequence_length:
         while (len(training) < sequence_length):
                 index = randint(0,len(all_exercises)-1)
                 if all_exercises[index] not in training:
