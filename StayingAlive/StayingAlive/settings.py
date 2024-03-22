@@ -11,10 +11,12 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
+import StayingAlive.ownsecrets as ownsecrets
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+SITE_ID = 1
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -25,19 +27,20 @@ SECRET_KEY = 'django-insecure-ok&h^s&t)7qi#(uc!nd6i+l#-x=ji$4pys&5hjm&_nx6_ah3i_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['example.com','127.0.0.1']
 
 # Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'SAapp.apps.SaappConfig',
+    'microsoft_auth',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +55,19 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'StayingAlive.urls'
 
+MICROSOFT_AUTH_CLIENT_ID = 'a0a8715a-6213-4bce-8f2c-d8cc9fa3b0ad'
+MICROSOFT_AUTH_CLIENT_SECRET = ownsecrets.Secret["Secret"]
+
+MICROSOFT = {
+"app_id": "a0a8715a-6213-4bce-8f2c-d8cc9fa3b0ad",
+"app_secret": ownsecrets.Secret["Secret"],
+"redirect": "http://localhost:8000/admin",
+"scopes": ["user.read"],
+"authority": "https://login.microsoftonline.com/common", # or using tenant "https://login.microsoftonline.com/{tenant}",
+
+"logout_uri": "http://localhost:8000/admin/logout"
+}
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -63,10 +79,20 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'microsoft_auth.context_processors.microsoft',
             ],
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'microsoft_auth.backends.MicrosoftAuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend'
+]
+
+
+
+MICROSOFT_AUTH_LOGIN_TYPE = 'ma'
 
 WSGI_APPLICATION = 'StayingAlive.wsgi.application'
 
